@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikTok OAuth Callback</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f9f9f9; color: #333; }
+        .container { max-width: 600px; margin: 60px auto; background: #fff; padding: 40px 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); text-align: center; }
+        .code-box { background: #f0f2f5; border: 1px solid #ddd; border-radius: 6px; padding: 18px; margin: 20px 0; font-size: 1.1em; word-break: break-all; }
+        .success { color: #27ae60; font-weight: bold; }
+        .error { color: #e74c3c; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>TikTok Login Callback</h1>
+        <div id="result"></div>
+        <div id="codeBox" class="code-box" style="display:none;"></div>
+        <p style="margin-top:30px;">You may now close this window or return to the application.</p>
+    </div>
+    <script>
+        // 1. ดึงค่า 'code' และ 'state' จาก URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const authCode = urlParams.get('code');
+        const state = urlParams.get('state');
+        const resultDiv = document.getElementById('result');
+        const codeBox = document.getElementById('codeBox');
+
+        if (authCode) {
+            resultDiv.innerHTML = '<span class="success">Authentication successful!</span><br>Your TikTok authorization code:';
+            codeBox.style.display = 'block';
+            codeBox.textContent = authCode;
+            // TODO: ส่ง code นี้ไปยัง server ของคุณเพื่อแลกเปลี่ยนเป็น access token
+        } else {
+            resultDiv.innerHTML = '<span class="error">No authorization code found in URL.</span>';
+        }
+    </script>
+</body>
+</html>
